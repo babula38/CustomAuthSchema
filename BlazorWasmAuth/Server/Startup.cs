@@ -33,9 +33,15 @@ namespace BlazorWasmAuth.Server
                         o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     });
 
+            //services.AddAuthentication("MySchema")
+            //        .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("MySchema", null);
+
             services.AddAuthentication("MySchema")
-                    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("MySchema",
-                                                                                        null);
+                    .AddScheme<CustomAuthenticationSchemeOptions,
+                                    BasicAuthenticationHandlerWithSchemaOption>("MySchema", options =>
+                                    {
+                                        options.CoolConfig = true;
+                                    });
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
