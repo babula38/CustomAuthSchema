@@ -38,23 +38,23 @@ else
 
 @code {
     private WeatherForecast[] forecasts;
-        
+
 
     protected override async Task OnInitializedAsync()
     {
         var request = new HttpRequestMessage
         {
             Method = HttpMethod.Get,
-            RequestUri = new Uri("/WeatherForecast")
-
+            RequestUri = new Uri("https://localhost:44363/WeatherForecast"),
         };
-        var response = await Http.SendAsync(request);
-        var responseJson = await response.Content.ReadAsStringAsync();
 
-        var seril = System.Text.Json.JsonSerializer.Deserialize<WeatherForecast[]>(responseJson);
+        //var response = await Http.SendAsync(request);
+        //var responseJson = await response.Content.ReadAsStringAsync();
 
-        Console.WriteLine($"response count:- {seril.Count()}");
-        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("WeatherForecast");
+        //var seril = System.Text.Json.JsonSerializer.Deserialize<WeatherForecast[]>(responseJson);
+
+        //Console.WriteLine($"response count:- {seril.Count()}");
+        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("https://localhost:44363/WeatherForecast");
     }
 
 }

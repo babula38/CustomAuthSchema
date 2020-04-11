@@ -60,5 +60,10 @@ namespace BlazorWasmAuth.Server.Helpers
 
             return AuthenticateResult.Success(ticket);
         }
+
+        protected override Task HandleChallengeAsync(AuthenticationProperties properties)
+        {
+            return base.HandleChallengeAsync(properties);
+        }
     }
 }

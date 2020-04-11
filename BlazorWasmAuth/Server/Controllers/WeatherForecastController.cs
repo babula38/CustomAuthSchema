@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlazorWasmAuth.Server.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "MySchema")]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

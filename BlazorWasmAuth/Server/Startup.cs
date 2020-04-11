@@ -36,12 +36,13 @@ namespace BlazorWasmAuth.Server
             //services.AddAuthentication("MySchema")
             //        .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("MySchema", null);
 
-            services.AddAuthentication("MySchema")
+            services.AddAuthentication("MySchema1")
                     .AddScheme<CustomAuthenticationSchemeOptions,
                                     BasicAuthenticationHandlerWithSchemaOption>("MySchema", options =>
                                     {
                                         options.CoolConfig = true;
-                                    });
+                                    })
+                    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("MySchema1", null); ;
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
