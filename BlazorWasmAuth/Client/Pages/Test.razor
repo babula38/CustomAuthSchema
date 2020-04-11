@@ -1,0 +1,62 @@
+﻿@page "/test"
+
+@using System.ComponentModel.DataAnnotations;
+<div class="container">
+    <h2>Vertical (basic) form</h2>
+    <EditForm EditContext="@EditContext" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        @*<ValidationSummary />*@
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <InputText type="email" @bind-Value="myClass.Email" class="form-control" id="email"
+                       placeholder="Enter email" name="email" />
+            <ValidationMessage For="@(() => myClass.Email)" />
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" name="remember"> Remember me</label>
+        </div>
+        <button type="submit" disabled="@_formInvalid" class="btn btn-danger btn-default">Submit</button>
+    </EditForm>
+</div>
+
+
+@code {
+    private MyClass myClass = new MyClass();
+    private EditContext EditContext;
+    private bool _formInvalid = true;
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(myClass);
+        //EditContext.OnFieldChanged += EditContext_OnFieldChanged;
+
+        //base.OnInit();
+    }
+
+    private void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        _formInvalid = !EditContext.Validate();
+        //StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        EditContext.OnFieldChanged -= EditContext_OnFieldChanged;
+    }
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("OnValidSubmit");
+    }
+    public class MyClass
+    {
+        //[Required]
+        //[StringLength(10, ErrorMessage = "Name is too long.")]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+}
